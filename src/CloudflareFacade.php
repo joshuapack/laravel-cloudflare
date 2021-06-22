@@ -1,6 +1,6 @@
 <?php
 
-namespace Novalis\Cloudflare;
+namespace Joshuapack\Cloudflare;
 
 use Illuminate\Support\Facades\Facade;
 

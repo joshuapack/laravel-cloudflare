@@ -1,7 +1,7 @@
 {
-  "name": "tnovalis/laravel-cloudflare",
+  "name": "joshuapack/laravel-cloudflare",
   "description": "Use the Cloudflare API right from Laravel.",
-  "homepage": "https://github.com/tnovalis/laravel-cloudflare",
+  "homepage": "https://github.com/joshuapack/laravel-cloudflare",
   "keywords": [
     "cloudflare",
     "laravel",
@@ -10,23 +10,23 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Novalis",
-      "email": "contact@tnovalis.com",
-      "homepage": "https://tnovalis.com",
+      "name": "Joshuapack",
+      "email": "joshua@joshuapack.com",
+      "homepage": "https://joshuapack.com",
       "role": "Developer"
     }
   ],
   "require": {
-    "php": "^7.0",
-    "cloudflare/sdk": "^1.0",
-    "illuminate/contracts": "^5.0"
+    "php": "^7.3|^8.0",
+    "cloudflare/sdk": "^1.1",
+    "illuminate/contracts": "^8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.1"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
-      "Novalis\\Cloudflare\\": "src"
+      "Joshuapack\\Cloudflare\\": "src"
     }
   },
   "config": {
@@ -35,10 +35,10 @@
   "extra": {
     "laravel": {
       "aliases":{
-        "Cloudflare": "Novalis\\Cloudflare\\CloudflareFacade"
+        "Cloudflare": "Joshuapack\\Cloudflare\\CloudflareFacade"
       },
       "providers": [
-        "Novalis\\Cloudflare\\CloudflareServiceProvider"
+        "Joshuapack\\Cloudflare\\CloudflareServiceProvider"
       ]
     }
   }

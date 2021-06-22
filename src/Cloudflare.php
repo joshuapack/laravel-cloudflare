@@ -1,6 +1,6 @@
 <?php
 
-namespace Novalis\Cloudflare;
+namespace Joshuapack\Cloudflare;
 
 use Cloudflare\API\Auth\APIKey as Key;
 use Illuminate\Support\Traits\Macroable;
