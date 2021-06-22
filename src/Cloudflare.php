@@ -26,7 +26,7 @@ class Cloudflare
         $this->ips = new CF_IPs($adapter);
     }
 
-    public function getZone($zone)
+    public function getZone()
     {
         return $this->zone;
     }
