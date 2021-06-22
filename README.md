@@ -1,6 +1,8 @@
 # Laravel Cloudflare
 The Cloudflare API for Laravel 8
 
+[See documentation](https://github.com/joshuapack/laravel-cloudflare/wiki)
+
 ### How to Install
 First do `composer require joshuapack/laravel-cloudflare`
 
