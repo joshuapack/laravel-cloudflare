@@ -6,6 +6,7 @@ use Cloudflare\API\Auth\APIKey as Key;
 use Illuminate\Support\Traits\Macroable;
 use GuzzleHttp\Exception\ClientException;
 use Cloudflare\API\Endpoints\DNS as CF_DNS;
+use Cloudflare\API\Endpoints\Zones as CF_ZONES;
 use Cloudflare\API\Endpoints\IPs as CF_IPs;
 use Cloudflare\API\Adapter\Guzzle as Adapter;
 
@@ -13,36 +14,45 @@ class Cloudflare
 {
     use Macroable;
 
-    protected $zone;
+    protected $zoneId;
     protected $dns;
+    protected $zones;
     protected $ips;
 
-    public function __construct($email, $api, $zone = null)
+    public function __construct(string $email, string $api, $zoneId = null)
     {
         $key = new Key($email, $api);
         $adapter = new Adapter($key);
-        $this->zone = $zone;
+        $this->zoneId = $zoneId;
         $this->dns = new CF_DNS($adapter);
+        $this->zones = new CF_ZONES($adapter);
         $this->ips = new CF_IPs($adapter);
     }
 
-    public function getZone()
+    public function getZoneId()
     {
-        return $this->zone;
+        return $this->zoneId;
     }
 
-    public function setZone($zone)
+    public function setZoneId(string $zoneId)
     {
-        $this->zone = $zone;
+        $this->zoneId = $zoneId;
         return $this;
     }
+    /**
+     * Get All Zone IDs
+     */
+    public function listZones(string $name = '', string $status = '', int $page = 1, int $perPage = 20, string $order = '', string $direction = '', string $match = 'all')
+    {
+        return $this->zones->listZones($name, $status, $page, $perPage, $order, $direction, $match);
+    }
 
-    /*
+    /**
      * DNS Queries
      */
-    public function addRecord($name, $content = null, $type = 'A', $ttl = 0, $proxied = true)
+    public function addRecord(string $name, $content = null, string $type = 'A', int $ttl = 0, bool $proxied = true)
     {
-        if (!$this->zone) {
+        if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
@@ -51,19 +61,19 @@ class Cloudflare
         }
 
         try {
-            return $this->dns->addRecord($this->zone, $type, $name, $content, $ttl, $proxied);
+            return $this->dns->addRecord($this->getZoneId(), $type, $name, $content, $ttl, $proxied);
         } catch (ClientException $e) {
             return false;
         }
     }
 
-    public function listRecords($info = false, $page = 0, $perPage = 20, $order = '', $direction = '', $type = '', $name = '', $content = '', $match = 'all')
+    public function listRecords($info = false, $page = 1, $perPage = 20, $order = '', $direction = '', $type = '', $name = '', $content = '', $match = 'all')
     {
-        if (!$this->zone) {
+        if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
-        $records = $this->dns->listRecords($this->zone, $type, $name, $content, $page, $perPage, $order, $direction);
+        $records = $this->dns->listRecords($this->getZoneId(), $type, $name, $content, $page, $perPage, $order, $direction);
 
         if ($info) {
             return $records;
@@ -72,38 +82,55 @@ class Cloudflare
         return collect($records->result);
     }
 
-    public function getRecordDetails($recordId)
+    public function getRecordDetails(string $recordId)
     {
-        if (!$this->zone) {
+        if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
-        return $this->dns->getRecordDetails($this->zone, $recordId);
+        return $this->dns->getRecordDetails($this->getZoneId(), $recordId);
     }
 
-    public function updateRecordDetails($recordId, array $details)
+    public function updateRecordDetails(string $recordId, array $details)
     {
-        if (!$this->zone) {
+        if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
-        return $this->dns->updateRecordDetails($this->zone, $recordId, $details);
+        return $this->dns->updateRecordDetails($this->getZoneId(), $recordId, $details);
     }
 
-    public function deleteRecord($recordId)
+    public function deleteRecord(string $recordId)
     {
-        if (!$this->zone) {
+        if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
-        return $this->dns->deleteRecord($this->zone, $recordId);
+        return $this->dns->deleteRecord($this->getZoneId(), $recordId);
     }
 
-    /*
+    /**
      * IP Queries
      */
     public function listIPs()
     {
         return $this->ips->listIPs();
     }
+
+    /**
+     * Query Cloudflare DNS API Endpoints directly
+     */
+    public function queryDNS()
+    {
+        return $this->dns;
+    }
+
+    /**
+     * Query Cloudflare DNS API Endpoints directly
+     */
+    public function queryZones()
+    {
+        return $this->zones;
+    }
+
 }

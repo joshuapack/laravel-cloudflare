@@ -1,6 +1,6 @@
 {
   "name": "joshuapack/laravel-cloudflare",
-  "description": "Use the Cloudflare API right from Laravel.",
+  "description": "Use the Cloudflare API for Laravel 8 and PHP 8.",
   "homepage": "https://github.com/joshuapack/laravel-cloudflare",
   "keywords": [
     "cloudflare",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Joshuapack",
+      "name": "Joshua Pack",
       "email": "joshua@joshuapack.com",
       "homepage": "https://joshuapack.com",
       "role": "Developer"
