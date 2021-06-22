@@ -70,13 +70,13 @@ class Cloudflare
         }
     }
 
-    public function listRecords($info = false, $page = 1, $perPage = 20, $order = '', $direction = '', $type = '', $name = '', $content = '', $match = 'all')
+    public function listRecords(bool $info = false, int $page = 1, int $perPage = 20, string $order = '', string $direction = '', string $type = '', string $name = '', string $content = '', string $match = 'all')
     {
         if (!$this->getZoneId() || !is_string($this->getZoneId())) {
             return false;
         }
 
-        $records = $this->dns->listRecords($this->getZoneId(), $type, $name, $content, $page, $perPage, $order, $direction);
+        $records = $this->dns->listRecords($this->getZoneId(), $type, $name, $content, $page, $perPage, $order, $direction, $match);
 
         if ($info) {
             return $records;
