@@ -23,7 +23,11 @@ class CloudflareServiceProvider extends ServiceProvider
         $cloudflareConfig = config('cloudflare');
 
         $this->app->bind(Cloudflare::class, function () use ($cloudflareConfig) {
-            return new Cloudflare($cloudflareConfig['email'], $cloudflareConfig['key'], $cloudflareConfig['zone']);
+            $zone = $cloudflareConfig['zone'];
+            if (!$zone || $zone == '') {
+                $zone = null;
+            }
+            return new Cloudflare($cloudflareConfig['email'], $cloudflareConfig['key'], $zone);
         });
 
         $this->app->alias(Cloudflare::class, 'laravel-cloudflare');
