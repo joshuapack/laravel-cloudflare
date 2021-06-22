@@ -41,3 +41,8 @@ You can see all API calls https://github.com/cloudflare/cloudflare-php for direc
 
  - `queryDNS`
  - `queryZones`
+ - `queryZoneSettings`
+
+
+### Questions
+If you have any questions feel free to ask in the issues tab on github. Same with adding more direct queries or other methods.

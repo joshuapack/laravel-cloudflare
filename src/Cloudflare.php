@@ -7,6 +7,7 @@ use Illuminate\Support\Traits\Macroable;
 use GuzzleHttp\Exception\ClientException;
 use Cloudflare\API\Endpoints\DNS as CF_DNS;
 use Cloudflare\API\Endpoints\Zones as CF_ZONES;
+use Cloudflare\API\Endpoints\ZoneSettings as CF_ZONESETTINGS;
 use Cloudflare\API\Endpoints\IPs as CF_IPs;
 use Cloudflare\API\Adapter\Guzzle as Adapter;
 
@@ -17,6 +18,7 @@ class Cloudflare
     protected $zoneId;
     protected $dns;
     protected $zones;
+    protected $zoneSettings;
     protected $ips;
 
     public function __construct(string $email, string $api, $zoneId = null)
@@ -26,6 +28,7 @@ class Cloudflare
         $this->zoneId = $zoneId;
         $this->dns = new CF_DNS($adapter);
         $this->zones = new CF_ZONES($adapter);
+        $this->zoneSettings = new CF_ZONESETTINGS($adapter);
         $this->ips = new CF_IPs($adapter);
     }
 
@@ -126,11 +129,19 @@ class Cloudflare
     }
 
     /**
-     * Query Cloudflare DNS API Endpoints directly
+     * Query Cloudflare Zones API Endpoints directly
      */
     public function queryZones()
     {
         return $this->zones;
+    }
+
+    /**
+     * Query Cloudflare ZoneSettings API Endpoints directly
+     */
+    public function queryZoneSettings()
+    {
+        return $this->zoneSettings;
     }
 
 }
