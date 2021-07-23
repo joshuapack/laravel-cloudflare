@@ -42,6 +42,8 @@ Which would return a collection of your records for that zone.
 You can see all API calls https://github.com/cloudflare/cloudflare-php for direct querying, however, we only have a couple available at this time.
 
  - `queryDNS`
+ - `queryFirewall`
+ - `queryFirewallSettings`
  - `queryZones`
  - `queryZoneSettings`
 
