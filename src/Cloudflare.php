@@ -27,6 +27,10 @@ class Cloudflare
 
     public function __construct($email, $api, $zoneId = null)
     {
+        if (!is_string($email) || !is_string($api)) {
+            return;
+        }
+
         $key = new Key($email, $api);
         $adapter = new Adapter($key);
         $this->zoneId = $zoneId;
