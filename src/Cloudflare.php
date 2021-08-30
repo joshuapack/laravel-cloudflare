@@ -25,7 +25,7 @@ class Cloudflare
     protected CF_ZONESETTINGS $zoneSettings;
     protected CF_IPs $ips;
 
-    public function __construct(string $email, string $api, $zoneId = null)
+    public function __construct($email, $api, $zoneId = null)
     {
         $key = new Key($email, $api);
         $adapter = new Adapter($key);
