@@ -1,5 +1,5 @@
 # Laravel Cloudflare
-The Cloudflare API for Laravel 9
+The Cloudflare API for Laravel 10
 
 [See documentation](https://github.com/joshuapack/laravel-cloudflare/wiki)
 

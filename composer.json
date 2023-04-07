@@ -18,8 +18,8 @@
   ],
   "require": {
     "php": ">=8.0",
-    "cloudflare/sdk": "^1.1",
-    "illuminate/contracts": "^9"
+    "cloudflare/sdk": "^1.3",
+    "illuminate/contracts": "^10"
   },
   "autoload": {
     "psr-4": {
