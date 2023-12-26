@@ -5,12 +5,32 @@ namespace Joshuapack\Cloudflare;
 use Cloudflare\API\Auth\APIKey as Key;
 use Illuminate\Support\Traits\Macroable;
 use GuzzleHttp\Exception\ClientException;
-use Cloudflare\API\Endpoints\DNS as CF_DNS;
-use Cloudflare\API\Endpoints\Firewall as CF_FIREWALL;
-use Cloudflare\API\Endpoints\FirewallSettings as CF_FIREWALLSETTINGS;
-use Cloudflare\API\Endpoints\Zones as CF_ZONES;
-use Cloudflare\API\Endpoints\ZoneSettings as CF_ZONESETTINGS;
-use Cloudflare\API\Endpoints\IPs as CF_IPs;
+use Cloudflare\API\Endpoints\AccessRules;
+use Cloudflare\API\Endpoints\AccountMembers;
+use Cloudflare\API\Endpoints\AccountRoles;
+use Cloudflare\API\Endpoints\Accounts;
+use Cloudflare\API\Endpoints\Certificates;
+use Cloudflare\API\Endpoints\Crypto;
+use Cloudflare\API\Endpoints\CustomHostnames;
+use Cloudflare\API\Endpoints\DNS;
+use Cloudflare\API\Endpoints\DNSAnalytics;
+use Cloudflare\API\Endpoints\Firewall;
+use Cloudflare\API\Endpoints\FirewallSettings;
+use Cloudflare\API\Endpoints\IPs;
+use Cloudflare\API\Endpoints\LoadBalancers;
+use Cloudflare\API\Endpoints\Membership;
+use Cloudflare\API\Endpoints\PageRules;
+use Cloudflare\API\Endpoints\Pools;
+use Cloudflare\API\Endpoints\Railgun;
+use Cloudflare\API\Endpoints\SSL;
+use Cloudflare\API\Endpoints\TLS;
+use Cloudflare\API\Endpoints\UARules;
+use Cloudflare\API\Endpoints\User;
+use Cloudflare\API\Endpoints\WAF;
+use Cloudflare\API\Endpoints\ZoneLockdown;
+use Cloudflare\API\Endpoints\ZoneSettings;
+use Cloudflare\API\Endpoints\ZoneSubscriptions;
+use Cloudflare\API\Endpoints\Zones;
 use Cloudflare\API\Adapter\Guzzle as Adapter;
 
 class Cloudflare
@@ -18,12 +38,32 @@ class Cloudflare
     use Macroable;
 
     protected $zoneId;
-    protected CF_DNS $dns;
-    protected CF_FIREWALL $firewall;
-    protected CF_FIREWALLSETTINGS $firewallSettings;
-    protected CF_ZONES $zones;
-    protected CF_ZONESETTINGS $zoneSettings;
-    protected CF_IPs $ips;
+    protected AccessRules $accessRules;
+    protected AccountMembers $accountMembers;
+    protected AccountRoles $accountRoles;
+    protected Accounts $accounts;
+    protected Certificates $certificates;
+    protected Crypto $crypto;
+    protected CustomHostnames $customHostnames;
+    protected DNS $dns;
+    protected DNSAnalytics $dnsAnalytics;
+    protected Firewall $firewall;
+    protected FirewallSettings $firewallSettings;
+    protected IPs $ips;
+    protected LoadBalancers $loadBalancers;
+    protected Membership $membership;
+    protected PageRules $pageRules;
+    protected Pools $pools;
+    protected Railgun $railgun;
+    protected SSL $ssl;
+    protected TLS $tls;
+    protected UARules $uaRules;
+    protected User $user;
+    protected WAF $waf;
+    protected ZoneLockdown $zoneLockdown;
+    protected ZoneSettings $zoneSettings;
+    protected ZoneSubscriptions $zoneSubscriptions;
+    protected Zones $zones;
 
     public function __construct($email, $api, $zoneId = null)
     {
@@ -34,12 +74,32 @@ class Cloudflare
         $key = new Key($email, $api);
         $adapter = new Adapter($key);
         $this->zoneId = $zoneId;
-        $this->dns = new CF_DNS($adapter);
-        $this->firewall = new CF_FIREWALL($adapter);
-        $this->firewallSettings = new CF_FIREWALLSETTINGS($adapter);
-        $this->zones = new CF_ZONES($adapter);
-        $this->zoneSettings = new CF_ZONESETTINGS($adapter);
-        $this->ips = new CF_IPs($adapter);
+        $this->accessRules = new AccessRules($adapter);
+        $this->accountMembers = new AccountMembers($adapter);
+        $this->accountRoles = new AccountRoles($adapter);
+        $this->accounts = new Accounts($adapter);
+        $this->certificates = new Certificates($adapter);
+        $this->crypto = new Crypto($adapter);
+        $this->customHostnames = new CustomHostnames($adapter);
+        $this->dns = new DNS($adapter);
+        $this->dnsAnalytics = new DNSAnalytics($adapter);
+        $this->firewall = new Firewall($adapter);
+        $this->firewallSettings = new FirewallSettings($adapter);
+        $this->ips = new IPs($adapter);
+        $this->loadBalancers = new LoadBalancers($adapter);
+        $this->membership = new Membership($adapter);
+        $this->pageRules = new PageRules($adapter);
+        $this->pools = new Pools($adapter);
+        $this->railgun = new Railgun($adapter);
+        $this->ssl = new SSL($adapter);
+        $this->tls = new TLS($adapter);
+        $this->uaRules = new UARules($adapter);
+        $this->user = new User($adapter);
+        $this->waf = new WAF($adapter);
+        $this->zoneLockdown = new ZoneLockdown($adapter);
+        $this->zoneSettings = new ZoneSettings($adapter);
+        $this->zoneSubscriptions = new ZoneSubscriptions($adapter);
+        $this->zones = new Zones($adapter);
     }
 
     public function getZoneId()
@@ -155,6 +215,14 @@ class Cloudflare
     }
 
     /**
+     * Query Cloudflare ZoneSettings API Endpoints directly
+     */
+    public function queryZoneSettings()
+    {
+        return $this->zoneSettings;
+    }
+
+    /**
      * Query Cloudflare Zones API Endpoints directly
      */
     public function queryZones()
@@ -163,11 +231,15 @@ class Cloudflare
     }
 
     /**
-     * Query Cloudflare ZoneSettings API Endpoints directly
+     * Query any Cloudflate endpoint directly
      */
-    public function queryZoneSettings()
+    public function queryCloudflare($prop)
     {
-        return $this->zoneSettings;
+        if (property_exists($this, $prop)) {
+            return $this->$prop;
+        } else {
+            return false;
+        }
     }
 
 }
