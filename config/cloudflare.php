@@ -13,6 +13,7 @@ return [
 
     /*
      * Your API Token, the preferable way
+     */
     'token' => env('CLOUDFLARE_TOKEN'),
 
     /*
