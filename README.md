@@ -16,10 +16,10 @@ Get the following information.
 
 Put them in your `.env` as the following, obviously and respectively.
 
-1. `CLOUDFLARE_EMAIL`
-2. `CLOUDFLARE_API_KEY`
-3. `CLOUDFLARE_API_TOKEN`, the preferred way. [Create a token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/). 
-4. `CLOUDFLARE_ZONE_ID`
+1. `CLOUDFLARE_EMAIL`, the legacy way, must be provided with `CLOUDFLARE_API_KEY`.
+2. `CLOUDFLARE_API_KEY`, the legacy way, must be provided with `CLOUDFLARE_EMAIL`.
+3. `CLOUDFLARE_API_TOKEN`, the preferred way, no email or key required. [Create a token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/).
+4. `CLOUDFLARE_ZONE_ID`, optional.
 
 ## How to use
 
