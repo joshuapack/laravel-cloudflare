@@ -14,7 +14,7 @@ return [
     /*
      * Your API Token, the preferable way
      */
-    'token' => env('CLOUDFLARE_TOKEN'),
+    'token' => env('CLOUDFLARE_API_TOKEN'),
 
     /*
      * The Zone you would like to modify
