@@ -18,7 +18,8 @@ Put them in your `.env` as the following, obviously and respectively.
 
 1. `CLOUDFLARE_EMAIL`
 2. `CLOUDFLARE_API_KEY`
-3. `CLOUDFLARE_ZONE_ID`
+3. `CLOUDFLARE_API_TOKEN`, the preferred way. [Create a token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/). 
+4. `CLOUDFLARE_ZONE_ID`
 
 ## How to use
 
