@@ -7,9 +7,13 @@ return [
     'email' => env('CLOUDFLARE_EMAIL'),
 
     /*
-     * Your Cloudflare API Key
+     * Your Cloudflare API (Global) Key to pair with email
      */
     'key' => env('CLOUDFLARE_API_KEY'),
+
+    /*
+     * Your API Token, the preferable way
+    'token' => env('CLOUDFLARE_TOKEN'),
 
     /*
      * The Zone you would like to modify
