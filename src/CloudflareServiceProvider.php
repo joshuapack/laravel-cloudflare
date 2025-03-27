@@ -27,7 +27,7 @@ class CloudflareServiceProvider extends ServiceProvider
             if (!$zone || $zone == '') {
                 $zone = null;
             }
-            return new Cloudflare($cloudflareConfig['email'], $cloudflareConfig['key'], $zone);
+            return new Cloudflare($cloudflareConfig['email'], $cloudflareConfig['key'], $cloudflareConfig['token'], $zone);
         });
 
         $this->app->alias(Cloudflare::class, 'laravel-cloudflare');
