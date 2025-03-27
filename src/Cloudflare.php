@@ -67,9 +67,9 @@ class Cloudflare
     protected ZoneSubscriptions $zoneSubscriptions;
     protected Zones $zones;
 
-    public function __construct($email, $api, $token, $zoneId = null)
+    public function __construct($email, $api, $token = null, $zoneId = null)
     {
-        $auth = $this->getAuth($token, $email, $api);
+        $auth = $this->getAuth($email, $api, $token);
         if (empty($auth)) {
             // Ideally it throws exception, but for now, it silently stops.
             return;
@@ -255,7 +255,7 @@ class Cloudflare
      *
      * When possible, use API tokens instead of Global API keys.
      */
-    private function getAuth($token, $email, $api): ?Auth
+    private function getAuth($email, $api, $token): ?Auth
     {
         if (!empty($token)) {
             return new Token($token);
