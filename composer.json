@@ -1,6 +1,6 @@
 {
   "name": "joshuapack/laravel-cloudflare",
-  "description": "Use the Cloudflare API for Laravel 10, 11, and 12 using PHP >= 8.1.",
+  "description": "Use the Cloudflare API for Laravel 10-12 using PHP >= 8.1.",
   "homepage": "https://github.com/joshuapack/laravel-cloudflare",
   "keywords": [
     "cloudflare",
