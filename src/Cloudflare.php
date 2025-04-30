@@ -2,7 +2,9 @@
 
 namespace Joshuapack\Cloudflare;
 
+use Cloudflare\API\Auth\Auth;
 use Cloudflare\API\Auth\APIKey as Key;
+use Cloudflare\API\Auth\APIToken as Token;
 use Illuminate\Support\Traits\Macroable;
 use GuzzleHttp\Exception\ClientException;
 use Cloudflare\API\Endpoints\AccessRules;
@@ -65,14 +67,15 @@ class Cloudflare
     protected ZoneSubscriptions $zoneSubscriptions;
     protected Zones $zones;
 
-    public function __construct($email, $api, $zoneId = null)
+    public function __construct($email, $api, $token = null, $zoneId = null)
     {
-        if (!is_string($email) || !is_string($api)) {
+        $auth = $this->getAuth($email, $api, $token);
+        if (empty($auth)) {
+            // Ideally it throws exception, but for now, it silently stops.
             return;
         }
 
-        $key = new Key($email, $api);
-        $adapter = new Adapter($key);
+        $adapter = new Adapter($auth);
         $this->zoneId = $zoneId;
         $this->accessRules = new AccessRules($adapter);
         $this->accountMembers = new AccountMembers($adapter);
@@ -242,4 +245,26 @@ class Cloudflare
         }
     }
 
+    /**
+     * Create authentication using API token or email and key combination.
+     *
+     * The preferred authorization scheme for interacting with the Cloudflare API is using token.
+     * Check on how to create token here: https://developers.cloudflare.com/fundamentals/api/get-started/create-token/
+     * 
+     * The previous authorization scheme for interacting with the Cloudflare API is using email in conjunction with a Global API key.
+     *
+     * When possible, use API tokens instead of Global API keys.
+     */
+    private function getAuth($email, $api, $token): ?Auth
+    {
+        if (!empty($token)) {
+            return new Token($token);
+        }
+        
+        if (!empty($email) && !empty($api)) {
+            return new Key($email, $api);
+        }
+
+        return null;
+    }
 }
