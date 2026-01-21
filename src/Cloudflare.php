@@ -39,6 +39,7 @@ class Cloudflare
 {
     use Macroable;
 
+    protected Adapter $adapter;
     protected $zoneId;
     protected AccessRules $accessRules;
     protected AccountMembers $accountMembers;
@@ -76,6 +77,7 @@ class Cloudflare
         }
 
         $adapter = new Adapter($auth);
+        $this->adapter = $adapter;
         $this->zoneId = $zoneId;
         $this->accessRules = new AccessRules($adapter);
         $this->accountMembers = new AccountMembers($adapter);
@@ -231,6 +233,19 @@ class Cloudflare
     public function queryZones()
     {
         return $this->zones;
+    }
+
+    /**
+     * Get any Cloudflare API Endpoint
+     */
+    public function getEndpoint(string $endpoint)
+    {
+        $endpoint = 'Cloudflare\\API\\Endpoints\\' . $endpoint;
+        if (class_exists($endpoint)) {
+            return new $endpoint($this->adapter);
+        }
+
+        return false;
     }
 
     /**
