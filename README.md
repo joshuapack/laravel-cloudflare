@@ -1,6 +1,6 @@
 # Laravel Cloudflare
 
-The Cloudflare API for Laravel 10-12
+The Cloudflare API for Laravel 10-13
 
 [See documentation](https://github.com/joshuapack/laravel-cloudflare/wiki)
 
