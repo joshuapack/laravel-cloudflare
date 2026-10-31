@@ -132,7 +132,7 @@ class Cloudflare
             return false;
         }
 
-        if ($content == null && $type = 'A') {
+        if ($content === null && $type === 'A') {
             $content = $_SERVER['SERVER_ADDR'];
         }
 
